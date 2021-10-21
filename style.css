@@ -87,7 +87,7 @@ body::-webkit-scrollbar-track {
   justify-content: center;
 }
 .intro p {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: bold;
   text-align: center;
   vertical-align: center;
@@ -102,7 +102,63 @@ body::-webkit-scrollbar-track {
 }
 
 .section-title {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.button {
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  width: 145px;
   font-size: 20px;
+}
+.button:hover {
+  opacity: 0.8;
+}
+
+.stopwatch {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+}
+.stopwatch .stopwatch__info-container {
+  display: flex;
+  align-items: start;
+}
+.stopwatch .stopwatch__info-container .stopwatch__loops-wrapper {
+  padding-top: 15px;
+  margin-left: 40px;
+  font-size: 18px;
+}
+.stopwatch .stopwatch__info-container .stopwatch__loops-wrapper .stopwatch__loops-list {
+  height: 84px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+.stopwatch .stopwatch__info-container .stopwatch__loops-wrapper .stopwatch__loops-list li {
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+.stopwatch .stopwatch__info-container .stopwatch__loops-wrapper .stopwatch__loops-list li:last-child {
+  opacity: 1;
+}
+.stopwatch .stopwatch__info-container .stopwatch__loops-wrapper .stopwatch__loops-list li:nth-last-child(3) {
+  opacity: 0.5;
+}
+.stopwatch .stopwatch__value {
+  display: block;
+  width: 660px;
+  font-size: 100px;
+}
+.stopwatch .stopwatch__button-start,
+.stopwatch .stopwatch__button-stop {
+  margin-top: 20px;
+}
+.stopwatch .stopwatch__button-start.active {
+  background-color: #fffb00;
 }
 
 /*# sourceMappingURL=style.css.map */

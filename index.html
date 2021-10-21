@@ -34,12 +34,23 @@
 
     <main>
         <section class="section-wrapper">
-            <div class="timer">
-                <div class="section-title text_yellow">
-                    <h1>Timer</h1>
-                </div>
-                <div class="section__content">
+            <div class="section-title text_yellow">
+                <h1>Stopwatch</h1>
+            </div>
+            <div class="section__content">
+                <div class="stopwatch">
+                    <div class="stopwatch__info-container">
+                        <p class="stopwatch__value">00:00:00:00</p>
+                        <div class="stopwatch__loops-wrapper">
+                            <ul class="stopwatch__loops-list">
 
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="buttons-container">
+                        <button class="button stopwatch__button-start"> Start </button>
+                        <button class="button stopwatch__button-stop"> Stop </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -47,6 +58,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
     <script src="script.js"></script>
+    <script src="stopwatch.js"></script>
 </body>
 
 </html>
