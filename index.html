@@ -11,29 +11,27 @@
 
 <body>
     <div class="intro">
-        <div class="intro__wrapper">
-            <p>
-                Koletsionok Egor <br>
-                <br>
-                Road to <span class="text_yellow">Frontend</span> engineer<br>
-                <br>
-                <span class="text-box" class="text-typing">
-                    <span id="typed"></span>
-                </span>
-            <div class="text-box" id="typed-strings">
-                <span>&ltHTML&gt</span>
-                <span>&ltCSS&gt</span>
-                <span>&ltJavaScript&gt</span>
-                <span>&ltSASS&gt</span>
-                <span>&ltGulp&gt</span>
-                <span>&ltReact&gt</span>
+        <div class="intro__mountains-black"></div>
+    </div>
+    <img src="img/forest.webp" alt="forest" class="intro__parallax-inner front">
+
+    <div class="modal">
+        <div class="modal__window">
+            <div class="modal__header">
+                <span class="modal__title">Title</span>
+                <img src="img/close.svg" alt="close icon" class="modal__close">
             </div>
-            </p>
+            <div class="modal__content">
+            </div>
+            <div class="modal__buttons">
+                <button class="modal__button-cancel">Cancel</button>
+                <button class="modal__button-ok">Ok</button>
+            </div>
         </div>
     </div>
 
     <main>
-        <section class="section-wrapper">
+        <section class="section-wrapper section-wrapper_relative">
             <div class="section-title text_yellow">
                 <h1>Stopwatch</h1>
             </div>
@@ -42,9 +40,7 @@
                     <div class="stopwatch__info-container">
                         <p class="stopwatch__value">00:00:00:00</p>
                         <div class="stopwatch__loops-wrapper">
-                            <ul class="stopwatch__loops-list">
-
-                            </ul>
+                            <ul class="stopwatch__loops-list"></ul>
                         </div>
                     </div>
                     <div class="buttons-container">
@@ -54,11 +50,127 @@
                 </div>
             </div>
         </section>
+
+        <section class="section-wrapper">
+            <div class="section-title text_yellow">
+                <h1>Timer</h1>
+            </div>
+            <div class="section__content">
+                <div class="timer">
+                    <div class="timer__info-container">
+                        <p class="timer__value">
+                            <span class="timer__hours timer__item">00</span>
+                            <span>:</span>
+                            <span class="timer__mins timer__item">00</span>
+                            <span>:</span>
+                            <span class="timer__secs timer__item">00</span>
+                            <span>:</span>
+                            <span class="timer__msecs timer__item">00</span>
+                        </p>
+                    </div>
+                    <div class="buttons-container">
+                        <button class="button timer__button-start"> Start </button>
+                        <button class="button timer__button-stop"> Stop </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-wrapper forecast" id="forecast">
+            <div class="section-title text_yellow">
+                <h1>Weather forecast</h1>
+            </div>
+            <div class="section__content section__content-forecast">
+
+                <div class="weather-card">
+                    <div class="weather-card__top-subsection">
+                        <div class="weather-card__current-info">
+                            <p>
+                                <span class="weather-card__current-temperature"></span>
+                                <span class="weather-card__current-date"></span>
+                                <span class="weather-card__current-city"></span>
+                            </p>
+                        </div>
+                        <div class="weather-card__icon">
+                            <span class="weather-icon__description"></span>
+                            <img class='weather-card__icon-image' src="" alt="weather icon">
+                        </div>
+                    </div>
+                    <div class="weather-card__middle-subsection">
+                        <div class="middle-subsection__feels-like">
+                            <span class="middle-subsection__feels-like-span"></span>
+                        </div>
+                        <div class="middle-subsection__max-temp">
+                            <span class="middle-subsection__max-temp-span"></span>
+                        </div>
+                        <div class="middle-subsection__min-temp">
+                            <span class="middle-subsection__min-temp-span"></span>
+                        </div>
+                    </div>
+                    <div class="weather-card__bot-subsection">
+                        <div class="bot-subsection__pressure">
+                            <span class="bot-subsection__pressure-span"></span>
+                        </div>
+                        <div class="bot-subsection__wind-speed">
+                            <span class="bot-subsection__wind-speed-span"></span>
+                        </div>
+                        <div class="bot-subsection__wind-direction">
+                            <span class="bot-subsection__wind-direction-span"></span>
+                        </div>
+                    </div>
+                    <div class="weather-card__remove-card">
+                        remove card
+                    </div>
+                </div>
+
+                <div class="weather-card empty">
+                    <div class="weather-card__input-wrapper">
+                        <input class="weather-card__input" type="text" id="city" placeholder="Enter a city">
+                    </div>
+                    <div class="weather-card__plus-wrapper">
+                        <div class="weather-card__plus">
+                            <img src="img/add.png" alt="" class="add-weather-iamge">
+                        </div>
+                    </div>
+                    <div class="weather-card__error-message-wrpapper">
+                        Oops! <br>
+                        We can't find your city... <br>
+                        Plese enter another one. <br>
+                        <img class="earth" src="img/earth.png" alt="earth">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-wrapper">
+            <div class="my-info__container">
+                <p>
+                    Kolentsionok Egor <br>
+                    <br>
+                    Road to Frontend engineer<br>
+                    <br>
+                </p>
+                <div class="my-info__socials-container">
+                    <div>
+                        <a class="my-info__socials-link" href="https://t.me/Kolentsionok">telegram</a>
+                    </div>
+                    <div>
+                        <a class="my-info__socials-link" href="https://vk.com/id149465289">vk</a>
+                    </div>
+                    <div>
+                        <a class="my-info__socials-link" href="mailto:egorkolentsionok@mail.ru">email</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
-    <script src="script.js"></script>
+    <script src="intro.js"></script>
+    <script src="modal.js"></script>
     <script src="stopwatch.js"></script>
+    <script src="timer.js"></script>
+    <script src="weather.js"></script>
+    <script src="scroll.js"></script>
 </body>
 
 </html>

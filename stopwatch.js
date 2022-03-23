@@ -2,6 +2,7 @@ let timerBox = document.querySelector(".stopwatch__value");
 let startButton = document.querySelector(".stopwatch__button-start");
 let stopButton = document.querySelector(".stopwatch__button-stop");
 let loopsList = document.querySelector(".stopwatch__loops-list");
+let arrow = document.querySelector(".arrow-down");
 let timeIntervals = timerBox.innerHTML.split(":");
 let loopsCounter = 1;
 let stopClicks = 0;
@@ -9,27 +10,26 @@ let interval, ms, s, min, h;
 ms = s = min = h = 0;
 startButton.addEventListener("click", () => {
   stopClicks = 0;
-  if (!startButton.classList.contains("active")){
+  if (!startButton.classList.contains("active")) {
     startButton.classList.add("active");
     startButton.innerHTML = "Loop";
     interval = setInterval(timeOutput, 10);
-  }
-  else{
-    loopsList.innerHTML += "<li>loop" + loopsCounter + " " + timerBox.innerHTML + "</li>";
+  } else {
+    loopsList.innerHTML +=
+      "<li>loop" + loopsCounter + " " + timerBox.innerHTML + "</li>";
     loopsCounter++;
   }
-
 });
 
 stopButton.addEventListener("click", () => {
   startButton.classList.remove("active");
   clearInterval(interval);
   startButton.innerHTML = "Start";
-  stopClicks ++;
-  if(stopClicks == 2){
+  stopClicks++;
+  if (stopClicks == 2) {
     timerBox.innerHTML = "00:00:00:00";
     ms = s = min = h = 0;
-    loopsList.innerHTML = '';
+    loopsList.innerHTML = "";
     loopsCounter = 1;
     stopClicks = 0;
   }
@@ -49,7 +49,9 @@ function timeOutput() {
     h++;
     min = 0;
   }
-  timeIntervals[timeIntervals.length - 1] = ms;
+  ms < 10
+    ? (timeIntervals[timeIntervals.length - 1] = "0" + ms)
+    : (timeIntervals[timeIntervals.length - 1] = +ms);
   s < 10
     ? (timeIntervals[timeIntervals.length - 2] = "0" + s)
     : (timeIntervals[timeIntervals.length - 2] = s);
