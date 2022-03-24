@@ -1,4 +1,4 @@
-let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 let addWeatherBtn = document.querySelector(".weather-card__plus-wrapper");
 let emptyCard = document.querySelector(".weather-card.empty");
 let emptyCardError = document.querySelector(".weather-card__error-message-wrpapper");
@@ -6,10 +6,11 @@ let weatherCard = document.querySelector(".weather-card");
 let cardsList = document.querySelectorAll(".weather-card");
 let cityInput = document.querySelector(".weather-card__input");
 let weatherTrack = document.querySelector(".section__content-forecast");
+let searchBtn = document.querySelector(".weather-card__serach-btn");
 let removeCardBtns;
 let weatherStorage;
 
-document.addEventListener("DOMContentLoaded", ()=> {
+document.addEventListener("DOMContentLoaded", () => {
     loadFromLocalStorage()
 });
 
@@ -20,12 +21,12 @@ addWeatherBtn.addEventListener("click", () => {
     emptyCard.classList.add("active");
 });
 
-function addListenersOnRemoveButtons(){
-    if (removeCardBtns != "undefined"){
+function addListenersOnRemoveButtons() {
+    if (removeCardBtns != "undefined") {
         removeCardBtns.forEach(item => {
             item.addEventListener("click", () => {
                 item.parentElement.classList.add("leaving");
-                setTimeout(() =>{
+                setTimeout(() => {
                     deleteFromLocalStorage(item.dataset.city);
                     item.parentElement.remove();
                     saveToLocalStorage();
@@ -35,7 +36,32 @@ function addListenersOnRemoveButtons(){
     };
 };
 
+searchBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
+        .then(data => {
+            if (data.ok) {
+                emptyCardAnimation()
+                data.json().then(cachData => {
+                    setTimeout(() => {
+                        addWeatherCard(cachData);
+                    }, 600);
+                });
+                cityInput.value = "";
+            }
+            else {
+                emptyCardError.classList.add("visible");
+                earthClick();
+                cityInput.addEventListener("input", () => {
+                    emptyCardError.classList.remove("visible");
+                });
+            };
+        });
+})
+
 cityInput.addEventListener("keydown", (e) => {
+    e.preventDefault();
     if (e.which === 13) {
         fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
             .then(data => {
@@ -55,14 +81,15 @@ cityInput.addEventListener("keydown", (e) => {
                         emptyCardError.classList.remove("visible");
                     });
                 };
-            }); 
+            });
     }
     else if (e.which === 27) {
         emptyCard.classList.remove("active");
     }
 });
 
-function emptyCardAnimation(){
+
+function emptyCardAnimation() {
     emptyCard.classList.remove("invalid");
     emptyCard.classList.remove("active");
     emptyCard.classList.add("leaving");
@@ -90,16 +117,16 @@ function addWeatherCard(cachData) {
 };
 
 function getWeather(city, card, cachData) {
-    if (city != null){
+    if (city != null) {
         fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
-        .then(response => { return response.json() })
-        .then(data => { fillHtml(card, data) });
+            .then(response => { return response.json() })
+            .then(data => { fillHtml(card, data) });
     }
     else
         fillHtml(card, cachData);
 }
 
-function fillHtml(card, data){
+function fillHtml(card, data) {
     let date = new Date();
     card.querySelector(".weather-card__current-city").innerText = data.name;
     card.setAttribute("data-city", `${data.name}`);
@@ -115,7 +142,7 @@ function fillHtml(card, data){
     card.querySelector(".bot-subsection__wind-direction-span").innerText = `Wind direction: ${windConvert(Math.round(data.wind.deg))}`;
 }
 
-function earthClick(){
+function earthClick() {
     let earthClickerCount = 0;
     let earth = document.querySelector(".earth");
     earth.addEventListener("click", () => {
@@ -142,26 +169,26 @@ function windConvert(degree) {
     return 'North';
 };
 
-function saveToLocalStorage(){
+function saveToLocalStorage() {
     let citiesToSave = document.querySelectorAll("[data-city]");
-    citiesToSave = Array.from(citiesToSave).map( item => item.dataset.city);
+    citiesToSave = Array.from(citiesToSave).map(item => item.dataset.city);
     localStorage.setItem("citiesToSave", JSON.stringify(citiesToSave));
 };
 
-function deleteFromLocalStorage(city){
+function deleteFromLocalStorage(city) {
     localStorage.removeItem(city);
 };
 
-function loadFromLocalStorage(){
-    if (JSON.parse(localStorage.getItem("citiesToSave")).length > 0){
-        Array.from(JSON.parse(localStorage.getItem("citiesToSave"))).forEach( city => {
-             let newCard = document.createElement("div");
-             newCard.classList.add("weather-card");
-             newCard.innerHTML = weatherCard.innerHTML;
-             weatherTrack.appendChild(newCard);
-             weatherTrack.appendChild(emptyCard);
-             getWeather(city, newCard);
-            });
+function loadFromLocalStorage() {
+    if (JSON.parse(localStorage.getItem("citiesToSave")).length > 0) {
+        Array.from(JSON.parse(localStorage.getItem("citiesToSave"))).forEach(city => {
+            let newCard = document.createElement("div");
+            newCard.classList.add("weather-card");
+            newCard.innerHTML = weatherCard.innerHTML;
+            weatherTrack.appendChild(newCard);
+            weatherTrack.appendChild(emptyCard);
+            getWeather(city, newCard);
+        });
     }
     removeCardBtns = document.querySelectorAll(".weather-card__remove-card");
     addListenersOnRemoveButtons();
