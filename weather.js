@@ -63,7 +63,6 @@ searchBtn.addEventListener("click", (e) => {
 })
 
 cityInput.addEventListener("keydown", (e) => {
-    e.preventDefault();
     if (e.which === 13) {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
             .then(data => {
