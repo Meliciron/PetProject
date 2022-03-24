@@ -11,7 +11,9 @@ let removeCardBtns;
 let weatherStorage;
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadFromLocalStorage()
+    if(localStorage.length > 0){
+        loadFromLocalStorage()
+    }
 });
 
 //getWeather("Saint Petersburg", weatherCard);
@@ -39,7 +41,7 @@ function addListenersOnRemoveButtons() {
 searchBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     e.preventDefault();
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
         .then(data => {
             if (data.ok) {
                 emptyCardAnimation()
@@ -63,7 +65,7 @@ searchBtn.addEventListener("click", (e) => {
 cityInput.addEventListener("keydown", (e) => {
     e.preventDefault();
     if (e.which === 13) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
             .then(data => {
                 if (data.ok) {
                     emptyCardAnimation()
@@ -118,7 +120,7 @@ function addWeatherCard(cachData) {
 
 function getWeather(city, card, cachData) {
     if (city != null) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2234bdedc95745aa825aa6e9d0905892`)
             .then(response => { return response.json() })
             .then(data => { fillHtml(card, data) });
     }
@@ -133,7 +135,7 @@ function fillHtml(card, data) {
     card.querySelector(".weather-card__current-date").innerText = `${date.getDate()}.${date.getMonth() + 1} ${days[date.getDay()]}`
     card.querySelector(".weather-card__current-temperature").innerHTML = `${Math.round(data.main.temp)}&deg`
     card.querySelector(".weather-icon__description").innerText = data.weather[0].description;
-    card.querySelector(".weather-card__icon-image").setAttribute("src", `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+    card.querySelector(".weather-card__icon-image").setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
     card.querySelector(".middle-subsection__feels-like-span").innerHTML = `Feels like: ${Math.round(data.main.feels_like)}&deg`;
     card.querySelector(".middle-subsection__max-temp-span").innerHTML = `Max temperature: ${Math.round(data.main.temp_max)}&deg`;
     card.querySelector(".middle-subsection__min-temp-span").innerHTML = `Min temperature: ${Math.round(data.main.temp_min)}&deg`;
