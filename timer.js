@@ -3,7 +3,7 @@ let timerSec = document.querySelector(".timer__secs");
 let timerMin = document.querySelector(".timer__mins");
 let timerHour = document.querySelector(".timer__hours");
 let timerValues = document.querySelector(".timer__value");
-let timersArray = $ (".timer__item");
+let timersArray = $(".timer__item");
 let timerStartBtn = document.querySelector(".timer__button-start");
 let timerStopBtn = document.querySelector(".timer__button-stop");
 let timerCounter = 0;
@@ -13,47 +13,47 @@ let timerInterval;
 
 function setTimer() {
   /*doubleclick set*/
-  /*scroll set*/ 
+  /*scroll set*/
   timersArray.mousedown(function () {
     let startY = this.scrollTop + event.pageY;
     timersArray.mousemove(function () {
       timerCounter = Number(event.target.innerHTML);
       offsetY = /*this.scrollTop = */startY - event.pageY;
-      if (offsetY > 0){
+      if (offsetY > 0) {
         timerCounter++;
-        if ((event.target.classList.contains("timer__msecs")) && (timerCounter >= 100)){
+        if ((event.target.classList.contains("timer__msecs")) && (timerCounter >= 100)) {
           timerCounter = 0;
           timersArray[3].innerHTML = additionalZero(timersArray[3].innerHTML, timerCounter);
           timersArray[2].innerHTML = additionalZero(timersArray[2].innerHTML, Number(timersArray[2].innerHTML) + 1);
-          if (timersArray[2].innerHTML >= 60){
+          if (timersArray[2].innerHTML >= 60) {
             timerCounter = 0;
             timersArray[2].innerHTML = "00";
             timersArray[1].innerHTML = additionalZero(timersArray[1].innerHTML, Number(timersArray[1].innerHTML) + 1);
           };
-          if ( timersArray[1].innerHTML >= 60){
+          if (timersArray[1].innerHTML >= 60) {
             timerCounter = 0;
             timersArray[1].innerHTML = "00";
             timersArray[0].innerHTML = additionalZero(timersArray[0].innerHTML, Number(timersArray[0].innerHTML) + 1);
           };
         };
-        if ((event.target.classList.contains("timer__secs")) && (timerCounter >= 60)){
+        if ((event.target.classList.contains("timer__secs")) && (timerCounter >= 60)) {
           timerCounter = 0;
           timersArray[2].innerHTML = additionalZero(timersArray[2].innerHTML, timerCounter);
           timersArray[1].innerHTML = additionalZero(timersArray[1].innerHTML, Number(timersArray[1].innerHTML) + 1);
-          if ( timersArray[1].innerHTML >= 60){
+          if (timersArray[1].innerHTML >= 60) {
             timerCounter = 0;
             timersArray[1].innerHTML = "00";
             timersArray[0].innerHTML = additionalZero(timersArray[0].innerHTML, Number(timersArray[0].innerHTML) + 1);
           };
         };
-        if ((event.target.classList.contains("timer__mins")) && (timerCounter >= 60)){
+        if ((event.target.classList.contains("timer__mins")) && (timerCounter >= 60)) {
           timerCounter = 0;
           timersArray[1].innerHTML = additionalZero(timersArray[1].innerHTML, timerCounter);
           timersArray[0].innerHTML = additionalZero(timersArray[0].innerHTML, Number(timersArray[0].innerHTML) + 1);
         };
         event.target.innerHTML = additionalZero(event.target.innerHTML, timerCounter);
       };
-      if (offsetY < 0){
+      if (offsetY < 0) {
         timerCounter--;
         timerCounter < 0 ? timerCounter = 0 : timerCounter;
         event.target.innerHTML = additionalZero(event.target.innerHTML, timerCounter);
@@ -65,98 +65,124 @@ function setTimer() {
   });
 };
 
+$(".timer__item").dblclick(function (e) {
+  let newTimerValue = prompt("Укажите время таймера", 10)
+  if (newTimerValue != null && newTimerValue.match(/^[0-9]+$/) != null && +newTimerValue < 100)  {
+    switch (e.target.classList.value) {
+      case "timer__msecs timer__item":
+        timerMs.innerHTML = newTimerValue;
+        break;
+      case "timer__secs timer__item":
+        timerSec.innerHTML = newTimerValue;
+        break;
+      case "timer__mins timer__item":
+        timerMin.innerHTML = newTimerValue;
+        break;
+      case "timer__hours timer__item":
+        timerHour.innerHTML = newTimerValue;
+        break;
+    }
+  }
+  else if(newTimerValue > 100){
+    alert("Значение не должно привышать 99")
+  }
+  else{
+    alert("Неверный формат записи")
+  }
+})
 
-function additionalZero(str, value){
-  if (value == 10){
+
+function additionalZero(str, value) {
+  if (value == 10) {
     return "10";
   }
-  if (value == 9){
+  if (value == 9) {
     return "09";
   }
   Number(str) < 10 ? str = "0" + value : str = value;
   return str;
 };
 setTimer();
-timerStartBtn.addEventListener("click", function(){
+timerStartBtn.addEventListener("click", function () {
   timerStopClicks = 0;
-  if (timerMs.innerHTML == "00" && timerSec.innerHTML == "00" && timerMin.innerHTML == "00" && timerHour.innerHTML == "00"){
+  if (timerMs.innerHTML == "00" && timerSec.innerHTML == "00" && timerMin.innerHTML == "00" && timerHour.innerHTML == "00") {
     let toggleCounter = 0;
     toggleInterval = setInterval(() => {
       timerValues.classList.toggle("error");
       toggleCounter++;
       toggleCounter == 6 ? clearInterval(toggleInterval) : toggleCounter;
-      }, 200);
+    }, 200);
   }
-  else{
-  timerInterval = setInterval(timeDecrease, 10);
-}
+  else {
+    timerInterval = setInterval(timeDecrease, 10);
+  }
 });
 
-timerStopBtn.addEventListener("click", function(){
+timerStopBtn.addEventListener("click", function () {
   clearInterval(timerInterval);
   timerStopClicks++;
-  if( timerStopClicks == 2){
+  if (timerStopClicks == 2) {
     timerMs.innerHTML = timerSec.innerHTML = timerMin.innerHTML = timerHour.innerHTML = "00";
     timerStopClicks = 0;
   }
 });
 
-function timeDecrease(){
+function timeDecrease() {
   let ms = Number(timerMs.innerHTML);
   let s = Number(timerSec.innerHTML);
   let min = Number(timerMin.innerHTML);
   let h = Number(timerHour.innerHTML);
   let firstStart = true;
 
-  if (firstStart){
-    if (ms == 0){
-      if( s != 0) {
+  if (firstStart) {
+    if (ms == 0) {
+      if (s != 0) {
         s--;
         ms = 99;
-        }
-        else if( min != 0){
-          min--;
-          s = 59;
-          ms = 99;
-        }
-        else if ( h != 0 ){
-          h--;
-          min = 59;
-          s = 59;
-          ms = 99;
-        }
+      }
+      else if (min != 0) {
+        min--;
+        s = 59;
+        ms = 99;
+      }
+      else if (h != 0) {
+        h--;
+        min = 59;
+        s = 59;
+        ms = 99;
+      }
     }
     firstStart = false;
   };
   ms--;
   if (ms == 0) {
-    if( s != 0) {
-    s--;
-    ms = 99;
+    if (s != 0) {
+      s--;
+      ms = 99;
     }
     else
       ms = 0;
   }
   if (s == 0) {
-    if( min != 0){
-    min--;
-    s = 59;
+    if (min != 0) {
+      min--;
+      s = 59;
     }
     else
-    s = 0;
+      s = 0;
   }
   if (min == 0) {
-    if ( h != 0 ){
-    h--;
-    min = 59;
+    if (h != 0) {
+      h--;
+      min = 59;
     }
     else
-    min = 0;
+      min = 0;
   }
-  if (ms > 0){
-  ms < 10
-    ? (timerMs.innerHTML = "0" + ms)
-    : (timerMs.innerHTML = ms);
+  if (ms > 0) {
+    ms < 10
+      ? (timerMs.innerHTML = "0" + ms)
+      : (timerMs.innerHTML = ms);
   }
   else {
     timerMs.innerHTML = "00";
@@ -165,7 +191,7 @@ function timeDecrease(){
       timerValues.classList.toggle("error");
       toggleCounter++;
       toggleCounter == 6 ? clearInterval(toggleInterval) : toggleCounter;
-      }, 200);
+    }, 200);
     clearInterval(timerInterval);
   };
   s < 10
